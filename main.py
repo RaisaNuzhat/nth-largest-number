@@ -1,28 +1,21 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    result = None
-    error = None
-
-    if request.method == 'POST':
-        numbers = request.form['numbers']
-        n = request.form['n']
-
+@app.route("/", methods=["GET", "POST"])
+def index():
+    result = ""
+    if request.method == "POST":
         try:
-            number_list = list(map(int, numbers.split(',')))
-            n = int(n)
-            if n > len(number_list) or n < 1:
-                error = "Invalid value of n."
-            else:
-                number_list.sort(reverse=True)
-                result = number_list[n - 1]
-        except:
-            error = "Please enter valid integers separated by commas and a valid n."
+            numbers = list(map(int, request.form["numbers"].split(",")))
+            n = int(request.form["n"])
+            numbers.sort(reverse=True)
+            result = f"{n}th largest number is: {numbers[n-1]}"
+        except Exception as e:
+            result = f"Error: {e}"
+    return render_template("index.html", result=result)
 
-    return render_template('index.html', result=result, error=error)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
