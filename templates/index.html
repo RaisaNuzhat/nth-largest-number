@@ -1,27 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Nth Largest Finder</title>
+    <title>Nth Largest Number Finder</title>
 </head>
 <body>
-    <h2>Find the Nth Largest Number</h2>
+    <h1>Find the Nth Largest Number</h1>
     <form method="POST">
-        <label>Enter numbers (comma separated):</label><br>
+        <label>Enter numbers (comma-separated):</label><br>
         <input type="text" name="numbers" required><br><br>
 
-        <label>Enter n (e.g., 2 for 2nd largest):</label><br>
+        <label>Enter n:</label><br>
         <input type="number" name="n" required><br><br>
 
-        <button type="submit">Find</button>
+        <input type="submit" value="Find Nth Largest">
     </form>
 
-    {% if result is not none %}
-        <h3>The {{ request.form['n'] }}<sup>{{'st' if request.form['n'] == '1' else 'nd' if request.form['n'] == '2' else 'th'}}</sup> largest number is: {{ result }}</h3>
-    {% endif %}
-
-    {% if error %}
-        <p style="color:red;">{{ error }}</p>
+    {% if result %}
+        <h2>{{ result }}</h2>
     {% endif %}
 </body>
 </html>
